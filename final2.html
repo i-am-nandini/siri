@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding: 20px;
+        }
+        .news-container {
+            margin-bottom: 20px;
+        }
+        .news-entry {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .news-content {
+            margin-bottom: 10px;
+        }
+        .news-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+        .action-btn {
+            margin-top: 10px;
+        }
+        /* .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        } */
+
+        h2 {
+            color: #333;
+        }
+
+        #comments {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .comment {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            position: relative;
+        }
+
+        .comment p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .delete-btn {
+            cursor: pointer;
+            color: #cc0000;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+
+
+
+    #poll-results {
+    display: flex;
+    flex-direction: column;
+    align-items:left;
+    margin-top: 50px;
+}
+
+.result {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.label {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* You can customize the colors based on your candidates or options */
+.result {
+    background: conic-gradient(
+        yellow 0% 75%,  /* Adjust the percentage based on the highest vote */
+        blue 75% 95%,   /* Adjust the percentage based on the second-highest vote */
+        transparent 95% 100%
+    );
+}
+#poll-results {
+    display: flex;
+    flex-direction: column;
+   
+    margin-top: 50px;
+}
+
+.result {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: relative;
+    background: conic-gradient(
+        yellow 0% 75%,  /* Adjust the percentage based on the highest vote */
+        blue 75% 95%,   /* Adjust the percentage based on the second-highest vote */
+        transparent 95% 100%
+    );
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.label {
+    margin-top: 20px;
+    text-align: left;
+    font-weight: bold;
+}
+
+
+
+/* Add this CSS rule to style.css */
+#poll-results {
+    display: flex;
+    flex-direction: column;
+    
+    text-align:left;
+}
+
+#poll-results button {
+    margin: 5px;
+}
+.button1{
+    position: absolute;
+    bottom: 2px;
+    right: 0;
+}
+
+
+
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Add News Form - Left Half -->
+        <div class="col-md-5">
+            <div class="news-container">
+                <h2 class="text-primary mb-4">Admin Panel</h2>
+                <form id="addNewsForm">
+                    <div class="form-group">
+                        <label for="newsTitle">Title:</label>
+                        <input type="text" class="form-control" id="newsTitle" required>
+                        <button type="button" class="button action-btn " onclick="addContent('newsTitle')">Add</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="newsContent">Content:</label>
+                        <textarea class="form-control" id="newsContent" rows="3" required></textarea>
+                        <button type="button" class="button action-btn" onclick="addContent('newsContent')">Add</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="newsImage">Image/Video:</label>
+                        <input type="file" class="form-control-file" id="newsImage" accept="image/*, video/*">
+                        <button type="button" class="button action-btn" onclick="addImage()">Add</button>
+                    </div>
+
+
+
+
+
+                    <div id="poll-results">
+                        <h2>Poll Section</h2>
+                        <div class="result" id="pie-chart"></div>
+                        <div class="label">
+                            <p>Election Vote Poll Results</p>
+                        </div>
+                        <div class="d-flex flex-row">
+                        <button id="voteTDP"> TDP</button>
+                        <button id="voteYSRCP"> YSRCP</button>
+                        
+                    </div>
+                    </div>
+                    <button onclick="addPollSection()">Add Poll Section</button>
+                    <br> <br>
+
+
+
+
+
+                                    
+                    <div  id="comment_section">
+                        <h2>Comment Section</h2>
+                    
+                        <ul id="comments"></ul>
+                    
+                        <textarea id="newComment" placeholder="Type your comment here"></textarea>
+                        <button onclick="addComment()">Add Comment</button>
+                        <button onclick="viewComments()">View Comments</button>
+                    </div><br>
+                    
+                    <button onclick="addCommentSection()">Add Comment Section</button>
+                    <br> <br>
+
+
+                    <button type="button" class="btn btn-primary" onclick="addNews()">Add All</button>
+                </form>
+            </div>
+        </div>
+        <div style="border-right: solid 1px black;margin-left:80px;height: 1500px;"></div>
+        <!-- Display News - Right Half -->
+        <div class="col-md-6">
+            <div class="news-container" id="newsList">
+
+                <h2 class="text-primary mb-4">Master Panel</h2>
+            </div>
+            <div id="display"></div>
+            <div id="displayhere"></div>
+            <button class="button1">push</button>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  // Function to add news articles
+function addNews() {
+    const title = document.getElementById('newsTitle').value;
+    const content = document.getElementById('newsContent').value;
+    const imageInput = document.getElementById('newsImage');
+    const pollsec = document.getElementById('poll-results');
+    const commentbox = document.getElementById('comment_section');
+
+    // Validate input
+    if (title || content || (imageInput.files.length > 0)) {
+        const newsContainer = document.getElementById('newsList');
+
+        const news = { id: Date.now(), title, content };
+
+        // Check if an image is selected
+        if (imageInput.files.length > 0) {
+            const selectedImage = imageInput.files[0];
+            const imageUrl = URL.createObjectURL(selectedImage);
+            news.image = imageUrl;
+        }
+
+        // Create HTML elements for the news entry
+        const newsItem = document.createElement('div');
+        newsItem.className = 'news-entry';
+        newsItem.innerHTML = `
+            <div class="news-content">
+                ${title ? `<h3>${title}</h3>` : ''}
+                ${content ? `<p>${content}</p>` : ''}
+            </div>
+            ${news.image ? `<img src="${news.image}" class="news-image" alt="News Image">` : ''}
+            <button class="btn btn-danger action-btn" onclick="removeNews(this)">Remove</button>
+        `;
+
+        // Insert the news entry into the DOM
+        newsContainer.appendChild(newsItem);
+        const clonedPollSection = pollsec.cloneNode(true);
+        newsContainer.appendChild(clonedPollSection);
+
+
+        const clonedCommentSection = commentbox.cloneNode(true);
+        newsContainer.appendChild(clonedCommentSection);
+
+        // Clear the form fields after adding news
+        document.getElementById('newsTitle').value = '';
+        document.getElementById('newsContent').value = '';
+        document.getElementById('newsImage').value = '';
+
+    } else {
+        alert('Please fill in at least one field (Title, Content, or Image/Video).');
+    }
+}
+
+// Function to remove a news article
+function removeNews(button) {
+    const newsItem = button.closest('.news-entry');
+    const commentSection = newsItem.previousElementSibling; // Assuming comment section is the next sibling
+    newsItem.remove();
+
+    // Check if there is a comment section and remove it
+    if (commentSection && commentSection.classList.contains('comment-section')) {
+        commentSection.remove();
+    }
+}
+
+
+
+    // Function to add content to the respective field
+    function addContent(fieldId) {
+        const field = document.getElementById(fieldId);
+        const contentToAdd = field.value.trim(); // Get the content from the field and remove leading/trailing whitespaces
+
+        if (contentToAdd) {
+            const newsContainer = document.getElementById('newsList');
+
+            // Create HTML elements for the news entry with the added content
+            const newsItem = document.createElement('div');
+            newsItem.className = 'news-entry';
+            newsItem.innerHTML = `
+                <div class="news-content">
+                    <p>content : ${contentToAdd}</p>
+                </div>
+                <button class="btn btn-danger action-btn" onclick="removeNews(this)">Remove</button>
+            `;
+
+            // Insert the news entry into the DOM
+            newsContainer.appendChild(newsItem);
+
+            // Clear the field after adding content
+            field.value = '';
+        } else {
+            alert('Please fill in the content.');
+        }
+    }
+
+    // Function to add image to the respective field
+    function addImage() {
+        const imageInput = document.getElementById('newsImage');
+        
+        if (imageInput.files.length > 0) {
+            const newsContainer = document.getElementById('newsList');
+
+            const selectedImage = imageInput.files[0];
+            const imageUrl = URL.createObjectURL(selectedImage);
+
+            // Create HTML elements for the news entry with the added image
+            const newsItem = document.createElement('div');
+            newsItem.className = 'news-entry';
+            newsItem.innerHTML = `
+                <div class="news-content">
+                    <img src="${imageUrl}" class="news-image" alt="News Image">
+                </div>
+                <button class="btn btn-danger action-btn" onclick="removeNews(this)">Remove</button>
+            `;
+
+            // Insert the news entry into the DOM
+            newsContainer.appendChild(newsItem);
+
+            // Clear the file input after adding image
+            imageInput.value = '';
+        } else {
+            alert('Please select an image or video.');
+        }
+    }
+</script>
+
+
+<script>
+    function addComment() {
+        var commentText = document.getElementById('newComment').value;
+
+        if (commentText.trim() === "") {
+            alert("Please enter a comment.");
+            return;
+        }
+
+        var commentsList = document.getElementById('comments');
+        var li = document.createElement('li');
+        li.className = 'comment';
+
+        var deleteButton = document.createElement('span');
+        deleteButton.className = 'delete-btn';
+        deleteButton.innerHTML = ' &#10006;';
+        deleteButton.onclick = function () {
+            li.remove();
+        };
+
+        li.innerHTML = '<p>' + commentText + '</p>';
+        li.appendChild(deleteButton);
+
+        commentsList.appendChild(li);
+
+        // Clear the input field
+        document.getElementById('newComment').value = "";
+    }
+
+    function viewComments() {
+        var commentsList = document.getElementById('comments').innerHTML;
+        localStorage.setItem('comments', commentsList);
+        window.location.href = 'view-comments.html';
+    }
+
+    function addCommentSection() {
+        var commentSection = document.getElementById('comment_section');
+        var displayHere = document.getElementById('displayhere');
+        
+        var clonedSection = commentSection.cloneNode(true);
+        
+        // Create a remove button for the added comment section
+        var removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove Comment Section';
+        removeButton.style.backgroundColor = 'red';
+        removeButton.style.margin='10px 10px';
+        removeButton.onclick = function () {
+            displayHere.removeChild(clonedSection);
+            displayHere.removeChild(removeButton);
+        };
+
+        displayHere.appendChild(clonedSection);
+        displayHere.appendChild(removeButton);
+    }
+</script>
+
+
+<script>
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const pieChart = document.getElementById("pie-chart");
+    const voteTDPButton = document.getElementById("voteTDP");
+    const voteYSRCPButton = document.getElementById("voteYSRCP");
+    const voteBJPButton = document.getElementById("voteBJP");
+
+    let tdpVotes = 0;
+    let ysrcpVotes = 0;
+    let bjpVotes = 0;
+    let totalVotes = 0;
+
+    voteTDPButton.addEventListener("click", function () {
+        tdpVotes++;
+        totalVotes++;
+        updatePieChart();
+    });
+
+    voteYSRCPButton.addEventListener("click", function () {
+        ysrcpVotes++;
+        totalVotes++;
+        updatePieChart();
+    });
+
+    voteBJPButton.addEventListener("click", function () {
+        bjpVotes++;
+        totalVotes++;
+        updatePieChart();
+    });
+
+    function updatePieChart() {
+        const percentageTDP = (tdpVotes / totalVotes) * 100;
+        const percentageYSRCP = (ysrcpVotes / totalVotes) * 100;
+        const percentageBJP = (bjpVotes / totalVotes) * 100;
+
+        pieChart.style.background = `conic-gradient(
+            yellow 0% ${percentageTDP}%,  
+            blue ${percentageTDP}% ${percentageTDP + percentageYSRCP}%,   
+            orangered ${percentageTDP + percentageYSRCP}% ${percentageTDP + percentageYSRCP + percentageBJP}%,   
+            transparent 0% 0%
+        )`;
+    }
+
+    updatePieChart(); // Initial update
+
+
+
+
+});
+
+</script>
+<script>
+function addPollSection() {
+    var pollSection = document.getElementById('poll-results');
+    var display = document.getElementById('display');
+    
+    var clonedPollSection = pollSection.cloneNode(true);
+    
+    // Create a remove button for the added poll section
+    var removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove Poll Section';
+    removeButton.style.backgroundColor = 'red';
+    removeButton.style.margin = '10px 10px';
+    removeButton.onclick = function () {
+        display.removeChild(clonedPollSection);
+        display.removeChild(removeButton);
+    };
+
+    display.appendChild(clonedPollSection);
+    display.appendChild(removeButton);
+}
+
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News App - Page 4</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Display transferred content -->
+            <div class="col-md-6">
+                <div class="news-container" id="newsList">
+                    <!-- Retrieve and display the newsList content -->
+                    <h2 class="text-primary mb-4">Transferred Content</h2>
+                    <script>
+                        const transferredNewsList = localStorage.getItem('newsList');
+                        document.getElementById('newsList').innerHTML = transferredNewsList;
+                    </script>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <!-- Display transferred poll section -->
+                <div id="poll-results">
+                    <!-- Retrieve and display the pollSection content -->
+                    <h2>Transferred Poll Section</h2>
+                    <script>
+                        const transferredPollSection = localStorage.getItem('pollSection');
+                        document.getElementById('poll-results').outerHTML = transferredPollSection;
+                    </script>
+                </div>
+
+                <!-- Display transferred comment section -->
+                <div id="comment_section">
+                    <!-- Retrieve and display the commentSection content -->
+                    <h2>Transferred Comment Section</h2>
+                    <script>
+                        const transferredCommentSection = localStorage.getItem('commentSection');
+                        document.getElementById('comment_section').outerHTML = transferredCommentSection;
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
